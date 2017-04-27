@@ -26,6 +26,10 @@ REACT_APP_APP="$(cat "${ENV_DIR}/REACT_APP_APP")"
     mv "${TMP_DIR}/core" "${BUILD_DIR}/.."
 )
 
+echo "1"
+ls "${BUILD_DIR}/.."
+echo "2"
+
 if [ $? -ne 0 ]; then
     echo "FAILED to copy directory into place" | indent
     exit 1
