@@ -20,7 +20,9 @@ REACT_APP_APP="$(cat "${ENV_DIR}/REACT_APP_APP")"
     mv "${STAGE}/$(basename "$REACT_APP_APP")" "${BUILD_DIR}"
 )
 
+echo "1"
 ls "${STAGE}"
+echo "2"
 
 if [ $? -ne 0 ]; then
     echo "FAILED to copy directory into place" | indent
