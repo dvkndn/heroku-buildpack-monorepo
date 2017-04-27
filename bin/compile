@@ -17,6 +17,7 @@ REACT_APP_APP="$(cat "${ENV_DIR}/REACT_APP_APP")"
 echo "$1"
 echo "$2"
 echo "$3"
+echo "${STAGE}"
 
 (
     mv "${BUILD_DIR}/${REACT_APP_APP}" "${STAGE}" &&
