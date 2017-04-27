@@ -16,14 +16,12 @@ REACT_APP_APP="$(cat "${ENV_DIR}/REACT_APP_APP")"
 
 (
     mv "${BUILD_DIR}/${REACT_APP_APP}" "${STAGE}" &&
+    mv "${BUILD_DIR}/core" "${STAGE}" &&
     rm -rf "${BUILD_DIR}" &&
     mv "${STAGE}/$(basename "$REACT_APP_APP")" "${BUILD_DIR}"
 )
 
-echo "${STAGE}/$(basename "$REACT_APP_APP")"
-echo "${BUILD_DIR}"
-echo "${BUILD_DIR}/.."
-echo "${BUILD_DIR}/../"
+ls "${STAGE}"
 
 if [ $? -ne 0 ]; then
     echo "FAILED to copy directory into place" | indent
