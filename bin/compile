@@ -14,10 +14,9 @@ if [ ! -f "${ENV_DIR}/REACT_APP_APP" ]; then
 fi
 REACT_APP_APP="$(cat "${ENV_DIR}/REACT_APP_APP")"
 
-echo "1"
-echo "${STAGE}/$(basename "$REACT_APP_APP")"
-echo "${BUILD_DIR}"
-echo "2"
+echo "$1"
+echo "$2"
+echo "$3"
 
 (
     mv "${BUILD_DIR}/${REACT_APP_APP}" "${STAGE}" &&
