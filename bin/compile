@@ -6,7 +6,7 @@ indent() {
 BUILD_DIR="$1"
 CACHE_DIR="$2"
 ENV_DIR="$3"
-STAGE="$(mktemp -d)"
+TMP_DIR="$(mktemp -d)"
 
 if [ ! -f "${ENV_DIR}/REACT_APP_APP" ]; then
     echo "REACT_APP_APP was not set. Aborting" | indent
@@ -15,22 +15,16 @@ fi
 REACT_APP_APP="$(cat "${ENV_DIR}/REACT_APP_APP")"
 
 (
-    mv "${BUILD_DIR}/${REACT_APP_APP}" "${STAGE}" &&
-    mv "${BUILD_DIR}/core" "${STAGE}" &&
+    # copy app and core to tmp
+    mv "${BUILD_DIR}/${REACT_APP_APP}" "${TMP_DIR}" &&
+    mv "${BUILD_DIR}/core" "${TMP_DIR}" &&
+    # remove original
     rm -rf "${BUILD_DIR}" &&
-    mv "${STAGE}/$(basename "$REACT_APP_APP")" "${BUILD_DIR}"
-    mv "${STAGE}/core" "${BUILD_DIR}/.."
+    # bring app back to build root
+    mv "${TMP_DIR}/$(basename "$REACT_APP_APP")" "${BUILD_DIR}"
+    # bring core back to parent of build root
+    mv "${TMP_DIR}/core" "${BUILD_DIR}/.."
 )
-
-echo "1"
-ls "${BUILD_DIR}"
-echo "2"
-ls .
-echo "3"
-ls ./..
-echo "4"
-ls "${BUILD_DIR}/.."
-echo "5"
 
 if [ $? -ne 0 ]; then
     echo "FAILED to copy directory into place" | indent
